@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>할 일 관리</title>
+    <meta charset="utf-8">
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+      .todo-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .input-container {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      #todo-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      .todo-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+      }
+      .todo-item:last-child {
+        border-bottom: none;
+      }
+      .todo-item.completed {
+        text-decoration: line-through;
+        color: #888;
+      }
+      .todo-item input[type="checkbox"] {
+        margin-right: 10px;
+      }
+      .delete-btn {
+        margin-left: auto;
+        background-color: #ff4444;
+        padding: 5px 10px;
+      }
+      .delete-btn:hover {
+        background-color: #cc0000;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>할 일 관리</h1>
+    <div class="todo-container">
+      <div class="input-container">
+        <input type="text" id="todo-input" placeholder="할 일을 입력하세요">
+        <button onclick="addTodo()">추가</button>
+      </div>
+      <div id="todo-list"></div>
+    </div>
+
+    <script>
+      function addTodo() {
+        const input = document.getElementById('todo-input');
+        const todoList = document.getElementById('todo-list');
+        
+        if (input.value.trim() === '') return;
+
+        const todoItem = document.createElement('div');
+        todoItem.className = 'todo-item';
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.onclick = function() {
+          todoItem.classList.toggle('completed');
+        };
+
+        const text = document.createElement('span');
+        text.textContent = input.value;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.textContent = '삭제';
+        deleteBtn.onclick = function() {
+          todoList.removeChild(todoItem);
+        };
+
+        todoItem.appendChild(checkbox);
+        todoItem.appendChild(text);
+        todoItem.appendChild(deleteBtn);
+        todoList.appendChild(todoItem);
+
+        input.value = '';
+      }
+
+      // Enter 키로 할 일 추가
+      document.getElementById('todo-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          addTodo();
+        }
+      });
+    </script>
+  </body>
+</html>
